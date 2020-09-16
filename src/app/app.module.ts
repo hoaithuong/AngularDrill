@@ -145,7 +145,8 @@ import { DynamicMeasureComponentComponent } from './routes/dynamic-measure-compo
 import { AttributeElementComponent } from './components/attribute-element/attribute-element.component';
 import { MeasureValueFilterComponentExampleComponent } from './components/measure-value-filter-component-example/measure-value-filter-component-example.component';
 import { MeasureValueFilterComponentPercentageExampleComponent } from './components/measure-value-filter-component-percentage-example/measure-value-filter-component-percentage-example.component';
-import { MeasureValueFilterComponentShowInPercentComponent } from './components/measure-value-filter-component-show-in-percent/measure-value-filter-component-show-in-percent.component'
+import { MeasureValueFilterComponentShowInPercentComponent } from './components/measure-value-filter-component-show-in-percent/measure-value-filter-component-show-in-percent.component';
+import {BarChartDrillExampleComponent} from './components/barchart-drill-example/barchart-drill-example.component'
 
 @NgModule({
     imports: [
@@ -293,7 +294,8 @@ import { MeasureValueFilterComponentShowInPercentComponent } from './components/
         AttributeElementComponent,
         MeasureValueFilterComponentExampleComponent,
         MeasureValueFilterComponentPercentageExampleComponent,
-        MeasureValueFilterComponentShowInPercentComponent
+        MeasureValueFilterComponentShowInPercentComponent,
+        BarChartDrillExampleComponent
 
     ],
     providers: [
@@ -397,7 +399,8 @@ import { MeasureValueFilterComponentShowInPercentComponent } from './components/
         AttributeElementComponent,
         MeasureValueFilterComponentExampleComponent,
         MeasureValueFilterComponentPercentageExampleComponent,
-        MeasureValueFilterComponentShowInPercentComponent
+        MeasureValueFilterComponentShowInPercentComponent,
+        BarChartDrillExampleComponent
     ]
 })
 

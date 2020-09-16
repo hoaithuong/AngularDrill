@@ -4,7 +4,7 @@ import * as uuid from 'uuid';
 import * as invariant from 'invariant';
 import { Component, Input, OnInit, OnDestroy, OnChanges, AfterViewInit } from '@angular/core';
 import { Table, Model, HeaderPredicateFactory } from '@gooddata/react-components';
-import '@gooddata/react-components/styles/css/main.css';
+import './node_modules/@gooddata/react-components/styles/css/main.css';
 import {
   projectId,
   locationStateDisplayFormIdentifier,
@@ -35,7 +35,7 @@ interface TableDrillExampleProps {
   template: '<div class="table-drill-example" style="height:500px" [id]="rootDomID"></div>',
 })
 export class TableDrillExampleComponent implements OnInit, OnDestroy, OnChanges, AfterViewInit {
-  // @Input() filters: any[];
+  @Input() filters: any[];
   @Input() sortBy: any[];
 
   xMeasures = [
@@ -58,18 +58,6 @@ export class TableDrillExampleComponent implements OnInit, OnDestroy, OnChanges,
     Model.attribute(locationNameDisplayFormIdentifier).localIdentifier("name"),
     Model.attribute(menuCategoryAttributeDFIdentifier).localIdentifier("menu"),
   ]
-
-  filters = [
-    {
-        positiveAttributeFilter: {
-            displayForm: {
-                identifier: 'label.restaurantlocation.locationstate'
-            },
-            in: ['California'],
-            textFilter: true
-        }
-    }
-]
   xTotals = [
     {
       measureIdentifier: "franchiseFeesIdentifier",

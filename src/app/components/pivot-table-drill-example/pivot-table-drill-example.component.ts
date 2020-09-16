@@ -38,9 +38,20 @@ interface PivotTableDrillExampleProps {
   template: '<div class="pivot-table-drill-example" style="height:500px" [id]="rootDomID"></div>',
 })
 export class PivotTableDrillExampleComponent implements OnInit, OnDestroy, OnChanges, AfterViewInit {
-  @Input() filters: any[];
+  // @Input() filters: any[];
   @Input() sortBy: any[];
   @Input() totals: any[];
+  filters = [
+    {
+        negativeAttributeFilter: {
+            displayForm: {
+                identifier: 'label.restaurantlocation.locationstate'
+            },
+            notIn: ['California'],
+            textFilter: true
+        }
+    }
+]
 
   onDrill = drillEvent => {
     console.log(

@@ -4,10 +4,21 @@ import  TableDrillExampleComponentSRC  from '!!raw-loader!../../components/table
 import  TableDrillExampleComponentHTML  from '!!raw-loader!../../components/table-drill-example/table-drill-example.component.html';
 import  TableDrillExampleComponentCSS  from '!!raw-loader!../../components/table-drill-example/table-drill-example.component.css';
 
+import { PivotTableDrillExampleComponent } from '../../components/pivot-table-drill-example/pivot-table-drill-example.component';
+import  PivotTableDrillExampleComponentSRC  from '!!raw-loader!../../components/pivot-table-drill-example/pivot-table-drill-example.component.ts';
+import  PivotTableDrillExampleComponentHTML  from '!!raw-loader!../../components/pivot-table-drill-example/pivot-table-drill-example.component.html';
+import  PivotTableDrillExampleComponentCSS  from '!!raw-loader!../../components/pivot-table-drill-example/pivot-table-drill-example.component.css';
+
+import { BarChartDrillExampleComponent } from '../../components/barchart-drill-example/barchart-drill-example.component';
+import  BarChartDrillExampleComponentSRC  from '!!raw-loader!../../components/barchart-drill-example/barchart-drill-example.component.ts';
+import  BarChartDrillExampleComponentHTML  from '!!raw-loader!../../components/barchart-drill-example/barchart-drill-example.component.html';
+import  BarChartDrillExampleComponentCSS  from '!!raw-loader!../../components/barchart-drill-example/barchart-drill-example.component.css';
+
 import { DrillWithExternalDataComponent } from '../../components/drill-with-external-data/drill-with-external-data.component';
 import  DrillWithExternalDataComponentSRC  from '!!raw-loader!../../components/drill-with-external-data/drill-with-external-data.component.ts';
 import  DrillWithExternalDataComponentHTML  from '!!raw-loader!../../components/drill-with-external-data/drill-with-external-data.component.html';
 import  DrillWithExternalDataComponentCSS  from '!!raw-loader!../../components/drill-with-external-data/drill-with-external-data.component.css';
+
 
 @Component({
   selector: 'app-drilling-components',
@@ -25,6 +36,22 @@ export class DrillingComponentsComponent implements OnInit {
       ts: TableDrillExampleComponentSRC,
       html: TableDrillExampleComponentHTML,
       css: TableDrillExampleComponentCSS
+    },
+    {
+      title: 'Pivot Table Drilling',
+      content: [],
+      for: PivotTableDrillExampleComponent,
+      ts: PivotTableDrillExampleComponentSRC,
+      html: PivotTableDrillExampleComponentHTML,
+      css: PivotTableDrillExampleComponentCSS
+    },
+    {
+      title: 'Barchart Drilling',
+      content: [],
+      for: BarChartDrillExampleComponent,
+      ts: BarChartDrillExampleComponentSRC,
+      html: BarChartDrillExampleComponentHTML,
+      css: BarChartDrillExampleComponentCSS
     },
     {
       title: 'Drill With External Data',

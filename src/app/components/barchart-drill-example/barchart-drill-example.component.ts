@@ -3,7 +3,7 @@ import * as ReactDOM from 'react-dom';
 import * as uuid from 'uuid';
 import * as invariant from 'invariant';
 import { Component, Input, OnInit, OnDestroy, OnChanges, AfterViewInit } from '@angular/core';
-import { Table, Model, HeaderPredicateFactory } from '@gooddata/react-components';
+import { BarChart, Model, HeaderPredicateFactory } from '@gooddata/react-components';
 import '@gooddata/react-components/styles/css/main.css';
 import {
   projectId,
@@ -14,84 +14,87 @@ import {
   franchiseFeesInitialFranchiseFeeIdentifier,
   franchiseFeesIdentifierOngoingRoyalty,
   menuCategoryAttributeDFIdentifier,
+  quarterDateIdentifier,
+  monthDateIdentifier
 } from '../../../utils/fixtures.js';
 
-interface TableDrillExampleBucketProps {
+interface BarChartDrillExampleBucketProps {
   projectId: any;
   measures?: any[];
-  attributes?: any[];
+  viewBy?: any[];
   drillableItems?: any[];
   onFiredDrillEvent?: any;
   totals?: any[];
   filters?: any[];
   sortBy?: any[];
 }
-interface TableDrillExampleProps {
+interface BarChartDrillExampleProps {
   projectId: any;
 }
 
 @Component({
-  selector: 'app-table-drill-example',
-  template: '<div class="table-drill-example" style="height:500px" [id]="rootDomID"></div>',
+  selector: 'app-pivot-drill-example',
+  template: '<div class="pivot-drill-example" style="height:500px" [id]="rootDomID"></div>',
 })
-export class TableDrillExampleComponent implements OnInit, OnDestroy, OnChanges, AfterViewInit {
-  // @Input() filters: any[];
+export class BarChartDrillExampleComponent implements OnInit, OnDestroy, OnChanges, AfterViewInit {
+  @Input() filters: any[];
   @Input() sortBy: any[];
 
-  xMeasures = [
+  measures = [
     Model.measure(franchiseFeesIdentifier)
-      .format("#,##0")
-      .localIdentifier("franchiseFeesIdentifier"),
+        .format("#,##0")
+        .localIdentifier("franchiseFeesIdentifier"),
     Model.measure(franchiseFeesAdRoyaltyIdentifier)
-      .format("#,##0")
-      .localIdentifier("franchiseFeesAdRoyaltyIdentifier"),
+        .format("#,##0")
+        .localIdentifier("franchiseFeesAdRoyaltyIdentifier"),
     Model.measure(franchiseFeesInitialFranchiseFeeIdentifier)
-      .format("#,##0")
-      .localIdentifier("franchiseFeesInitialFranchiseFeeIdentifier"),
+        .format("#,##0")
+        .localIdentifier("franchiseFeesInitialFranchiseFeeIdentifier"),
     Model.measure(franchiseFeesIdentifierOngoingRoyalty)
-      .format("#,##0")
-      .localIdentifier("franchiseFeesIdentifierOngoingRoyalty"),
-  ]
+        .format("#,##0")
+        .localIdentifier("franchiseFeesIdentifierOngoingRoyalty"),
+];
 
-  xAttributes = [
+attributes = [
     Model.attribute(locationStateDisplayFormIdentifier).localIdentifier("state"),
     Model.attribute(locationNameDisplayFormIdentifier).localIdentifier("name"),
     Model.attribute(menuCategoryAttributeDFIdentifier).localIdentifier("menu"),
-  ]
+];
 
-  filters = [
+columns = [Model.attribute(quarterDateIdentifier), Model.attribute(monthDateIdentifier)];
+
+totals = [
     {
-        positiveAttributeFilter: {
-            displayForm: {
-                identifier: 'label.restaurantlocation.locationstate'
-            },
-            in: ['California'],
-            textFilter: true
-        }
-    }
-]
-  xTotals = [
-    {
-      measureIdentifier: "franchiseFeesIdentifier",
-      type: "avg",
-      attributeIdentifier: "state",
+        measureIdentifier: "franchiseFeesIdentifier",
+        type: "sum",
+        attributeIdentifier: "state",
     },
     {
-      measureIdentifier: "franchiseFeesAdRoyaltyIdentifier",
-      type: "avg",
-      attributeIdentifier: "mostatenth",
+        measureIdentifier: "franchiseFeesAdRoyaltyIdentifier",
+        type: "sum",
+        attributeIdentifier: "state",
     },
     {
-      measureIdentifier: "franchiseFeesInitialFranchiseFeeIdentifier",
-      type: "avg",
-      attributeIdentifier: "state",
+        measureIdentifier: "franchiseFeesIdentifier",
+        type: "max",
+        attributeIdentifier: "state",
     },
     {
-      measureIdentifier: "franchiseFeesIdentifierOngoingRoyalty",
-      type: "avg",
-      attributeIdentifier: "state",
+        measureIdentifier: "franchiseFeesIdentifier",
+        type: "sum",
+        attributeIdentifier: "menu",
     },
-  ];
+    {
+        measureIdentifier: "franchiseFeesAdRoyaltyIdentifier",
+        type: "sum",
+        attributeIdentifier: "menu",
+    },
+];
+
+drillableItems = [
+    HeaderPredicateFactory.identifierMatch(menuCategoryAttributeDFIdentifier),
+    HeaderPredicateFactory.identifierMatch(franchiseFeesIdentifier),
+];
 
   xSortBy = [Model.attributeSortItem("menu", "asc")]
   onDrill = drillEvent => {
@@ -108,10 +111,7 @@ export class TableDrillExampleComponent implements OnInit, OnDestroy, OnChanges,
       return null;
     }
   };
-  drillableItems = [
-    HeaderPredicateFactory.identifierMatch(menuCategoryAttributeDFIdentifier),
-    HeaderPredicateFactory.identifierMatch(franchiseFeesIdentifier),
-  ];
+
   public rootDomID: string;
 
   protected getRootDomNode() {
@@ -120,14 +120,14 @@ export class TableDrillExampleComponent implements OnInit, OnDestroy, OnChanges,
     return node;
   }
 
-  protected getProps(): TableDrillExampleProps | TableDrillExampleBucketProps {
+  protected getProps(): BarChartDrillExampleProps | BarChartDrillExampleBucketProps {
     return {
       projectId: projectId,
-      measures: this.xMeasures,
-      attributes: this.xAttributes,
-      totals: this.xTotals,
-      filters: this.filters,
-      sortBy: this.xSortBy,
+      measures: this.measures,
+      viewBy: this.attributes,
+      // totals: this.totals,
+      // filters: this.filters,
+      // sortBy: this.xSortBy,
       drillableItems: this.drillableItems,
       onFiredDrillEvent: this.onDrill
     };
@@ -139,7 +139,7 @@ export class TableDrillExampleComponent implements OnInit, OnDestroy, OnChanges,
 
   protected render() {
     if (this.isMounted()) {
-      ReactDOM.render(React.createElement(Table, this.getProps()), this.getRootDomNode());
+      ReactDOM.render(React.createElement(BarChart, this.getProps()), this.getRootDomNode());
     }
 
   }
